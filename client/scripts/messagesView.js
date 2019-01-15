@@ -3,18 +3,17 @@ var MessagesView = {
   $chats: $('#chats'),
 
   initialize: function() {
-    // var renderedMessage = _.template(JSON.stringify(message));
-    MessagesView.$chats.on('load', MessagesView.renderMessage);
-
-    // $('#chats').append(renderedMessage);
-
+    setTimeout(function() {
+      for(var i = 0; i < App.data.results.length; i++) {
+        if (App.data.results[i].username !== undefined){
+        MessagesView.renderMessage(App.data.results[i]);
+        }
+      }
+    }, 1000);
   },
 
   renderMessage: function(message) {
-    var renderedMessage = _.template('<div><%=username%>' + 
-                                     '<%=text%>' +
-                                    '<%=roomname%></div>');
+    var renderedMessage = _.template('<div class="username"><%=username%></div>');
     this.$chats.append(renderedMessage(message));
   }
-
 };

@@ -9,8 +9,9 @@ var FormView = {
   handleSubmit: function(event) {
     // Stop the browser from submitting the form
     event.preventDefault();
-    
-    console.log('click!');
+    var message = {username: 'poop', text: 'YEET', roomname: 'YEET MCWHEATY'};
+    Parse.create(message);
+    console.log('click');
   },
 
   setStatus: function(active) {

@@ -4,6 +4,8 @@ var App = {
 
   username: 'anonymous',
 
+  data: null,
+
   initialize: function() {
     App.username = window.location.search.substr(10);
 
@@ -15,12 +17,21 @@ var App = {
     App.startSpinner();
     App.fetch(App.stopSpinner);
 
+    $(document).on('click', '.username', function(event) {
+      console.log(event.target);
+      Friends.toggleStatus();
+    });
+
+    $(document).on('click', '#rooms button', function(event) {
+      alert('clicked!')
+    })
   },
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
+      App.data = data;
 
       callback();
     });
