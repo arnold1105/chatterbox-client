@@ -4,9 +4,12 @@ var RoomsView = {
   $select: $('#rooms select'),
 
   initialize: function() {
+    RoomsView.$button.on('click', RoomsView.renderRoom);
   },
 
-  render: function() {
+  renderRoom: function(room) {
+    var options = _.template("<option><%=room%></option>");
+    this.$select.append(options({room: room}));
   }
 
 };
