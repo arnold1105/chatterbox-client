@@ -24,20 +24,22 @@ var Messages = {
     while(chats.hasChildNodes()) {
       chats.removeChild(chats.firstChild);
     }
+    if(Rooms.selected() === '') {
+      MessagesView.renderMessage();
+    } else {
+      var filteredMessages = _.filter(Messages._data, function(data) {
+        if(data.roomname === Rooms.selected()) {
+          return true;
+        } else {
+          return false;
+        }
+      });
     
-    var filteredMessages = _.filter(Messages._data, function(data) {
-      if(data.roomname === Rooms.selected()) {
-        return true;
-      } else {
-        return false;
+      for(var message of filteredMessages) {
+        var $message = MessageView.render(message);
+        MessagesView.$chats.append($message);
       }
-    });
-    
-    for(var message of filteredMessages) {
-      var $message = MessageView.render(message);
-      MessagesView.$chats.append($message);
     }
-
   },
 
   render: function(username, text) {
