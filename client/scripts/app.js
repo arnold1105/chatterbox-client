@@ -4,8 +4,6 @@ var App = {
 
   username: 'anonymous',
 
-  data: null,
-
   initialize: function() {
     App.username = window.location.search.substr(10);
 
@@ -24,14 +22,15 @@ var App = {
 
     $(document).on('click', '#rooms button', function(event) {
       alert('clicked!')
-    })
+    });
+    
   },
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
       // examine the response from the server request:
-      console.log(data);
-      App.data = data;
+      Rooms.update(data.results, RoomsView.renderRoom);
+      Messages.update(data.results, MessagesView.renderMessage);
 
       callback();
     });

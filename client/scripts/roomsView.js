@@ -4,20 +4,19 @@ var RoomsView = {
   $select: $('#rooms select'),
 
   initialize: function() {
-    setTimeout(function(){
-      for (var i = 0; i < App.data.results.length; i++){
-        if (App.data.results[i].roomname !== undefined &&
-        $('#rooms select').text().indexOf(App.data.results[i].roomname) === -1) {  
-          RoomsView.renderRoom(App.data.results[i]);
-        }
-      }    
-    }, 1000);
+    $(document).on('change', 'select', function() {
+      $('option[value="' + this.value + '"]', this)
+        .attr('selected', true)
+        .siblings()
+        .removeAttr('selected')
+    });
   },
 
-  renderRoom: function(room) {
-    var options = _.template('<option class="roomname"><%=roomname%></option>');
-   
-    this.$select.append(options({roomname : room.roomname}));
+  renderRoom: function() {
+    for(var room of Rooms._data) {
+      var options = _.template(`<option class="roomname"><%-roomname%></option>`);
+      RoomsView.$select.append(options({roomname : room}));
+    }
   }
 
 };
